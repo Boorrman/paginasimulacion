@@ -1,0 +1,102 @@
+{% extends "layout2.html" %}
+
+{% block content %}
+<div class="container demo-1">
+	<!-- Codrops top bar -->
+	<div class="codrops-top clearfix">
+		<span class="right"><a href="/static/ManualDeUsuario.pdf" target="_blank" ><strong>Manual de uso</strong></a></span>
+	  </div>
+	<!--/ Codrops top bar -->
+	<header class="clearfix">
+
+		<h1 id="texthead"> Método del cuadrado medio </h1>
+		<div class="right">
+			<div id="dl-menu" class="dl-menuwrapper">
+				<button class="dl-trigger">Open Menu</button>
+				<ul class="dl-menu">
+					<li>
+					<li>
+						<a href="{{ url_for('metran_api.cuadrado_medio') }}">Método cuadrado medio</a>
+					</li>
+					<li>
+						<a href="{{ url_for('metran_api.congruencial_aditivo') }}">Método congruencial aditivo</a>
+					</li>
+					<li>
+						<a href="#">Método congruencial multiplicativo</a>
+						<ul class="dl-submenu">
+							<li><a href="{{ url_for('metran_api.congruencial_multiplicativo_autogenerado') }}">Autogenerar
+									valores</a></li>
+							<li><a href="{{ url_for('metran_api.congruencial_multiplicativo_30264') }}">generador
+									excel-03 mod 30264</a></li>
+							<li><a href="{{ url_for('metran_api.congruencial_multiplicativo_30307') }}">generador
+									excel-07 mod 30307</a></li>
+							<li><a href="{{ url_for('metran_api.congruencial_multiplicativo_30323') }}">generador
+									excel-07 mod 30323</a></li>
+						</ul>
+					</li>
+					</li>
+				</ul>
+			</div><!-- /dl-menuwrapper -->
+		</div>
+	</header>
+	<div class="main clearfix">
+		<form method=post action="">
+			<div class="column">
+				<table>
+					{% for field in form %}
+					<tr>
+						<td>{{ field.label }}</td>
+					</tr>
+					<tr>
+						<td>{{ field }}</td>
+					</tr>
+					{% endfor %}
+					<td>
+						<input type=submit value=Calcular>
+		</form>
+		<form method="get" action="/">
+			<button type="submit">Regresar</button>
+		</form>
+		</td>
+		</table>
+
+	</div>
+	<div class="column">
+		<p>
+			En este método cada número sucesivo se genera tomando los \(n\) dígitos centrales del cuadrado del
+			número anterior de \(n\) dígitos.
+
+			{% if N != None %}
+			Para los datos ingresados, el valor inicial de \({{ res }}\) pasamos a elevarlo al cuadrado \[{{ res }}^2 =
+			{{ res2 }} \] luego tomamos
+			los valores medios de el resultado y los dividimos para 10 elevado a la cantidad de unidades que
+			se ingresaron inicialmente dándonos así el resultado de nuestro número pseudoaleatorio
+			\[ { {{ res3 }} \over 10^{{ res5 }} }= {{ res4 }} \] repetimos el proceso con los números medios que sacamos
+			anteriormente
+			e iteramos la cantidad de veces requeridas.
+
+			{% endif %}
+		</p>
+	</div>
+</div>
+<div class="main clearfix">
+	<div class="column">
+		{% if N != None %}
+		<h2> Tabla de valores randoms</h2>
+		{% for table in tables %}
+		{{ table|safe }}
+		{% endfor %}
+		{% endif %}
+	</div>
+	<div class="column">
+		{% if N != None %}
+		<h2>Gráfica de los números aleatorios generados</h2>
+		<img src="{{ grafica }}" width="550">
+
+		{% endif %}
+	</div>
+</div>
+</div><!-- /container -->
+
+
+{% endblock %}
